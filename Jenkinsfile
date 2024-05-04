@@ -7,6 +7,11 @@ pipeline {
         AWS_DEFAULT_REGION = "us-east-1"
     }
 
+    parameters {
+        choice choices: ['apply', 'destroy'], description: 'Terraform action options', name: 'Actions'
+    }
+
+
     stages {
         stage('SCM Init ...') {
             steps {
@@ -16,7 +21,7 @@ pipeline {
         
         stage ("Terraform  code syntax check ...") {
             steps {
-                sh "terraform fmt" 
+                sh "terraform fmt"
             }
         }
         
@@ -44,12 +49,14 @@ pipeline {
         }
         stage("Deploy to EKS") {
             when {
-               expression { params.apply }
+               equals expected: 'destroy', actual: params.CHOICE
             }
             steps {
-                  sh "aws eks update-kubeconfig --name eks_cluster"
-                   sh "kubectl apply -f deployment.yaml"
-             }
+                sh '''
+                    aws eks update-kubeconfig --name eks_cluster
+                    kubectl apply -f deployment.yaml
+                '''
+            }
         }
     }
     post { 
