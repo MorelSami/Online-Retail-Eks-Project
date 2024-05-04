@@ -44,7 +44,7 @@ pipeline {
         }
         stage ("Resource provisioning based on selected action > ") {
             steps {
-                sh 'terraform ${params.ACTION} --auto-approve'
+                sh "terraform ${params.ACTION} --auto-approve"
            }
         }
         stage("Deploy to EKS") {
