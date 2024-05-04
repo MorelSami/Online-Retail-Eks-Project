@@ -6,7 +6,7 @@ output "aws_resource_info" {
         public_subnet_a_id = aws_subnet.eks_pub_sub_one.id
         public_subnet_b_id = aws_subnet.eks_pub_sub_two.id
         static_elastic_id = aws_eip.nat_eip.id
-        cluster_arn = aws_eks_cluster.eks_cluster.kubeconfig
+        cluster_arn = aws_eks_cluster.eks_cluster.arn
     }
     description = "EKS cluster resources general information"
 }

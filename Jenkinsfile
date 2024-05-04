@@ -44,12 +44,12 @@ pipeline {
         }
         stage ("Resource provisioning based on selected action > ") {
             steps {
-                sh 'terraform ${action} --auto-approve' 
+                sh 'terraform ${params.Actions} --auto-approve' 
            }
         }
         stage("Deploy to EKS") {
             when {
-               equals expected: 'destroy', actual: params.CHOICE
+               equals expected: 'destroy', actual: params.Actions
             }
             steps {
                 sh '''
