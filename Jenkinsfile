@@ -8,7 +8,7 @@ pipeline {
     }
 
     parameters {
-        choice choices: ['apply', 'destroy'], description: 'Terraform action options', name: 'Actions'
+        choice choices: ['apply', 'destroy'], description: 'Terraform action options', name: 'ACTION'
     }
 
 
@@ -44,12 +44,12 @@ pipeline {
         }
         stage ("Resource provisioning based on selected action > ") {
             steps {
-                sh 'terraform ${params.Actions} --auto-approve' 
+                sh 'terraform ${params.ACTION} --auto-approve'
            }
         }
         stage("Deploy to EKS") {
             when {
-               equals expected: 'destroy', actual: params.Actions
+               equals expected: 'destroy', actual: params.ACTION
             }
             steps {
                 sh '''
