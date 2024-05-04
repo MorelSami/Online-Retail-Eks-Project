@@ -49,7 +49,7 @@ pipeline {
         }
         stage("Deploy to EKS") {
             when {
-               equals expected: 'destroy', actual: params.ACTION
+               equals expected: 'apply', actual: params.ACTION
             }
             steps {
                 sh '''
