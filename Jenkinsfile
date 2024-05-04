@@ -51,10 +51,13 @@ pipeline {
                    sh "kubectl apply -f deployment.yaml"
              }
         }
-        stage ("Provisioning complete") {
-            steps {
-                sh 'echo "Online retail store application successfully deployed."' 
-           }
+    }
+    post { 
+        success { 
+           echo 'Online retail store application successfully deployed.'
+        }
+        failure {
+           echo 'Online retail store application deployment unsuccessful.'
         }
     }
 }
